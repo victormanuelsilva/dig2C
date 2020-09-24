@@ -1,0 +1,30 @@
+RContadorA          EQU     0x0D    ; Registro utilizado para el retardo
+RContadorB          EQU     0x0E    ; Registro utilizado para el retardo
+
+
+
+;********** C O D I G O * R E T A R D O S **************************************
+; Considerando Fosc=4MHz, ciclo maquina (cm) = 1uS
+; Se tiene que para Retardo_20ms = 2 + 1 + 2 + (2 + 4M + 4KM) donde K=249 y M=20
+; Retardo = 20007 us = 20 ms
+
+Retardo_20ms                        ; 2 ciclo máquina
+	movlw	d'20'                   ; 1 ciclo máquina. Este es el valor de "M"
+	goto    Retardo_ms              ; 2 ciclo máquina.
+
+; Las siguientes lineas duran
+; Retardo = 1 + M + M + KM + (K-1)M + 2M + (K-1)2M + (M-1) + 2 + 2(M-1) + 2
+; Retardo = 2 + 4M + 4KM para K=249 y suponiendo M=1 tenemos
+; Retardo = 1002 us = 1 ms
+Retardo_ms
+	movwf	RContadorB              ; 1 ciclos máquina.
+Retardo_BucleExterno
+	movlw	d'249'                  ; Mx1 ciclos máquina. Este es el valor de "K".
+	movwf	RContadorA              ; Mx1 ciclos máquina.
+Retardo_BucleInterno
+	nop                             ; KxMx1 ciclos máquina.
+	decfsz	RContadorA,F            ; (K-1)xMx1 cm (si no salta) + Mx2 cm (al saltar).
+	goto	Retardo_BucleInterno    ; (K-1)xMx2 ciclos máquina.
+	decfsz	RContadorB,F            ; (M-1)x1 cm (si no salta) + 2 cm (al saltar).
+	goto	Retardo_BucleExterno	; (M-1)x2 ciclos máquina.
+	return                          ; 2 ciclos máquina.
