@@ -1,0 +1,37 @@
+DISP_UPDATE_D1
+	BCF PORTA,1 ;TURN OFF DIGIT 2.
+	SWAPF DISP_COUNTER,W ;SWAP NIBBLES AND STORE IN W.
+	MOVWF DISP_TEMP
+	MOVLW 0X0F
+	ANDWF DISP_TEMP,W ;GET LOW NIBBLE FOR DISPLAY.
+	CALL SEVENSEG_LOOKUP
+	MOVWF PORTB ;PUT DATA ON PORTB.
+	BSF PORTA,0 ;TURN ON DIGIT 1.
+	RETURN
+	
+DISP_UPDATE_D2
+	BCF PORTA,0 ;TURN OFF DIGIT 1.
+	MOVLW 0x0F
+	ANDWF DISP_COUNTER,W
+	CALL SEVENSEG_LOOKUP
+	MOVWF PORTB ;PUT DATA ON PORTB.
+	BSF PORTA,1 ;TURN ON DIGIT 2.
+	RETURN
+
+;--------------------------------------------------------------------------
+; NUMBERIC LOOKUP TABLE FOR 7 SEG
+;--------------------------------------------------------------------------
+SEVENSEG_LOOKUP 
+	ADDWF PCL,f
+	RETLW 3Fh ; //Hex value to display the number 0.
+	RETLW 06h ; //Hex value to display the number 1.
+	RETLW 5Bh ; //Hex value to display the number 2.
+	RETLW 4Fh ; //Hex value to display the number 3.
+	RETLW 66h ; //Hex value to display the number 4.
+	RETLW 6Dh ; //Hex value to display the number 5.
+	RETLW 7Ch ; //Hex value to display the number 6.
+	RETLW 07h ; //Hex value to display the number 7.
+	RETLW 7Fh ; //Hex value to display the number 8.
+	RETLW 6Fh ; //Hex value to display the number 9.
+	RETURN
+;**** Aquí está nuestra subrutina
