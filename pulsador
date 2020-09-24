@@ -1,1 +1,21 @@
 
+;********** C O N F I G * P U E R T O S ****************************************
+; Se configuran entradas y salidas, se inicializan variables y puertos
+Inicio
+    bsf     STATUS,RP0      ; Pasamos de Banco 0 a Banco 1
+	movlw	b'00000000'     ; Cargamos b'00000000' en W
+	movwf	TRISB           ; Cargamos W en TRISB, PORTB como salida
+    movlw	b'00001'        ; Cargamos b'00001' en W
+	movwf	TRISA           ; Cargamos W en TRISA, RA0 como entrada
+	bcf     STATUS,RP0      ; Paso del Banco 1 al Banco 0
+    movlw	b'0111111'      ; Cargamos b'0111111' en W
+	movwf	PORTB           ; Cargamos W en PORTB, Comienza el display en 0
+	clrf	ContadorDisplay ; Contador inicia en 0
+
+;********** R U T I N A * T E S T E O ******************************************
+Testeo
+	btfss	PORTA,Boton         ; Esta pulsado el Boton (RA0=1??)
+	goto	Testeo              ; No??, seguimos testeando
+	call	Retardo_20ms        ; Si??, Eliminamos efecto rebote
+	btfss	PORTA,Boton         ; Testeamos nuevamente
+	goto	Testeo              ; Falsa Alarma, seguimos testeando
