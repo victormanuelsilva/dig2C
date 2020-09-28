@@ -1,0 +1,78 @@
+; CONFIG1
+; __config 0xF8F1
+ __CONFIG _CONFIG1, _FOSC_XT & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF & _BOREN_OFF & _IESO_OFF & _FCMEN_ON & _LVP_ON
+; CONFIG2
+; __config 0xFFFF
+ __CONFIG _CONFIG2, _BOR4V_BOR40V & _WRT_OFF
+    
+    
+    LIST p=16F887
+    INCLUDE <P16F887.INC>
+ 
+;**** Definicion de variables ****
+Contador1	equ	0x0C
+Contador2	equ	0x0D
+
+Pulsador	equ	0	; pin RB0
+Led		equ	1	; pin RB1
+
+;**** Inicio del Micro ****
+;reset
+	org	0x00		; Aqui comienza el micro.-
+	goto	Inicio		; Salto a inicio de mi programa.-
+;**** Vector de Interrupcion ****
+	org	0x04		; Atiendo Interrupcion.-
+	goto	ISR
+
+; **** Programa Principal ****
+;**** Configuracion de puertos ***
+	org	0x05		; Origen del codigo de programa.-
+Inicio
+	bsf	STATUS,RP0 	; Pasamos de Banco 0 a Banco 1.-
+	movlw	b'11111101'	; RB0 como entrada y RB1 como salida.-
+	movwf	TRISB
+	movlw	b'01000000'	; Config. Por flanco Ascendente.-
+	movwf	OPTION_REG
+	bcf	STATUS,RP0	; Paso del Banco 1 al Banco 0
+	bcf	PORTB,Led	; El Led comienza apagado.-
+	movlw	b'10010000'	; Habilitamos GIE y INTE (interrupción por RB0)
+	movwf	INTCON
+;**** Bucle infinito ****
+Bucle
+	nop			;no operation
+	goto	Bucle		;
+
+;.............................................
+;**** Rutina de servicio de Interrupcion ****
+;**** Interrupcion por RB0 ****
+ISR
+	btfss	INTCON,INTF		; Consultamos si es por RB0.-
+	retfie					; No, Salimos de interrupción.-
+	call	Demora_20ms		; Comprueba si es rebote.-
+	btfss	PORTB,Pulsador
+	goto	Fin_ISR			; Es rebote, entonces salimos.-
+	btfss	PORTB,Led		; Si esta prendido, lo apagamos.-
+	goto	Prender_Led
+	bcf	PORTB,Led		; Apagamos Led
+	goto	Fin_ISR
+Prender_Led
+	bsf	PORTB,Led		; Encendemos Led
+Fin_ISR
+	bcf	INTCON,INTF		; Limpiamos bandera.-
+	retfie					; Salimos de interrupción.-
+;..........................................
+;**** Demora ****
+Demora_20ms
+	movlw	0xFF			;
+	movwf	Contador1		; Iniciamos contador1.-
+Repeticion1
+	movlw	0x19			;
+	movwf	Contador2		; Iniciamos contador2
+Repeticion2
+	decfsz	Contador2,1		; Decrementa Contador2 y si es 0 sale.-
+	goto	Repeticion2		; Si no es 0 repetimos ciclo.-
+	decfsz	Contador1,1		; Decrementa Contador1.-
+	goto	Repeticion1		; Si no es cero repetimos ciclo.-
+	return				; Regresa de la subrutina.-
+
+	end
