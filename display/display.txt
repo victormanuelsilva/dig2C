@@ -1,0 +1,159 @@
+; CONFIG1
+; __config 0xF8F1
+ __CONFIG _CONFIG1, _FOSC_XT & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF & _BOREN_OFF & _IESO_OFF & _FCMEN_ON & _LVP_ON
+; CONFIG2
+; __config 0xFFFF
+ __CONFIG _CONFIG2, _BOR4V_BOR40V & _WRT_OFF
+    
+    
+    LIST p=16F887
+    INCLUDE <P16F887.INC>
+
+
+;***** VARIABLE DEFINITIONS
+;DISP_7SEG UDATA
+;DISP_COUNTER RES 1
+;DISP_TEMP RES 1
+;DISP_FREQ RES 1
+
+    
+Contador1 EQU 0x20
+Contador2 EQU 0x21
+DISP_COUNTER EQU 0x22
+DISP_TEMP EQU 0x23
+DISP_FREQ EQU 0x24
+ 
+ 
+ 
+    ORG 0x00 ; Inicio de programa
+    goto init
+ ;**** Configurar el puerto****
+init
+	bsf STATUS,5 ; Cambia al Banco 1
+	movlw 00h ; Configura los pines del puerto B ...
+	movwf TRISD ; ...como salidas.
+	movwf TRISA ; ...como salidas.
+	
+	bcf STATUS,5 ; Vuelve al Banco 0
+	movlw 00h ; Configura nuestro registro w con 02h
+	movwf PORTD ; ...como salidas.
+	movwf PORTA ; ...como salidas.
+	CLRF DISP_COUNTER
+	CLRF DISP_TEMP
+	movlw 20h ; Configura nuestro registro w con 02h
+	movwf DISP_FREQ
+	
+	movlw 08h ; Configura nuestro registro w con 02h
+	movwf DISP_COUNTER
+		
+	
+	; 20 + 20 = 40
+	; 40 * 32 (DISP_FREQ) = 1200 ms = 1 segundo
+	
+	; 00 -> 1seg
+	; 01 -> 1 seg
+	; 02 -> 1 seg
+	; 03
+	; 04
+	
+	
+MAIN
+	CALL DISP_UPDATE_D1
+	CALL DELAY_20MS
+	CALL DISP_UPDATE_D2
+	CALL DELAY_20MS
+	DECFSZ DISP_FREQ
+	GOTO MAIN
+	DECF DISP_COUNTER,F
+	movlw 20h ; Configura nuestro registro w con 02h
+	movwf DISP_FREQ
+	GOTO MAIN	
+	
+DISP_UPDATE_D2
+	BCF PORTA,0 ;TURN OFF DIGIT 1.
+	SWAPF DISP_COUNTER,W ;SWAP NIBBLES AND STORE IN W.
+	MOVWF DISP_TEMP
+	MOVLW 0X0F
+	ANDWF DISP_TEMP,W ;GET LOW NIBBLE FOR DISPLAY.
+	CALL SEVENSEG_LOOKUP
+	MOVWF PORTB ;PUT DATA ON PORTB.
+	BSF PORTA,1 ;TURN ON DIGIT 2.
+	RETURN
+	
+DISP_UPDATE_D1
+	BCF PORTA,1 ;TURN OFF DIGIT 2.
+	MOVLW 0x0F
+	ANDWF DISP_COUNTER,W
+	CALL SEVENSEG_LOOKUP
+	MOVWF PORTB ;PUT DATA ON PORTB.
+	BSF PORTA,0 ;TURN ON DIGIT 1.
+	RETURN	
+	
+	
+	
+	
+	
+	
+	
+	
+	; AND logica
+	; a b   a AND b
+	; 0 0     0
+	; 0 1     0
+	; 1 0     0
+	; 1 1     1
+	
+	
+	; Nible (4 bits)    NH    NL
+	; Counter = 0x57 = 0101  0111
+	; W       = 0x0F = 0000  1111
+	; AND     = 0x07 = 0000  0111 (NL) 
+	
+	; Nible (4 bits)    NH    NL
+	; Counter = 0x57 = 0101  0111
+	; W       = 0xF0 = 1111  0000
+	; AND     = 0x50 = 0101  0000 (NH)
+	
+	
+	; Counter = 0x57 = 0101  0111
+	; SWAP Counter 0x75 = 0111  0101
+	; W	     = 0x0F = 0000  1111
+	; AND	     = 0x05 = 0000  0101
+	
+	
+
+
+;--------------------------------------------------------------------------
+; NUMBERIC LOOKUP TABLE FOR 7 SEG
+;--------------------------------------------------------------------------
+SEVENSEG_LOOKUP 
+	ADDWF PCL,f
+	RETLW 3Fh ; //Hex value to display the number 0.
+	RETLW 06h ; //Hex value to display the number 1.
+	RETLW 5Bh ; //Hex value to display the number 2.
+	RETLW 4Fh ; //Hex value to display the number 3.
+	RETLW 66h ; //Hex value to display the number 4.
+	RETLW 6Dh ; //Hex value to display the number 5.
+	RETLW 7Ch ; //Hex value to display the number 6.
+	RETLW 07h ; //Hex value to display the number 7.
+	RETLW 7Fh ; //Hex value to display the number 8.
+	RETLW 6Fh ; //Hex value to display the number 9.
+	RETURN
+;**** Aquí está nuestra subrutina
+;..........................................
+;**** Demora ****
+DELAY_20MS
+	movlw	0xFF			;
+	movwf	Contador1		; Iniciamos contador1.-
+Repeticion1
+	movlw	0x19			;
+	movwf	Contador2		; Iniciamos contador2
+Repeticion2
+	decfsz	Contador2,1		; Decrementa Contador2 y si es 0 sale.-
+	goto	Repeticion2		; Si no es 0 repetimos ciclo.-
+	decfsz	Contador1,1		; Decrementa Contador1.-
+	goto	Repeticion1		; Si no es cero repetimos ciclo.-
+	return				; Regresa de la subrutina.-
+
+	end
+;**** Final del programa ****
