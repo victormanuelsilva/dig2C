@@ -1,0 +1,49 @@
+para decrementar
+
+	movlw 0x99
+	movwf Contador3
+test3
+	movlw 0x0f
+	andwf Contador3,0
+	movwf TEMP
+	movlw 0x0F ;move literal value to accumulator
+	subwf TEMP,0 ;subtract 9 from dig0 and result in accumulator
+	btfss STATUS, 0 ;skip if carry flag is 1
+	goto  test4          ; after conversion, BCD = 99
+	movlw 0xf0
+	andwf Contador3,1
+	movlw 0x09
+	addwf Contador3,1
+	movf Contador3
+
+test4
+	;call tabla
+	;call delay
+	
+	decf Contador3
+	goto test3
+;
+
+
+
+para incrementar
+
+	movlw 0x00
+	movwf Contador3
+test
+	movlw 0x0f
+	andwf Contador3,0
+	movwf TEMP
+	movlw 0x0A ;move literal value to accumulator
+	subwf TEMP,0 ;subtract 9 from dig0 and result in accumulator
+	btfss STATUS, 0 ;skip if carry flag is 1
+	goto  test1          ; after conversion, BCD = 99
+	movlw 0xf0
+	andwf Contador3,1
+	movlw 0x10
+	addwf Contador3,1
+	movf Contador3
+	call tabla
+test1
+	incf Contador3
+	goto test
