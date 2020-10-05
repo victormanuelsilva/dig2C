@@ -1,4 +1,4 @@
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  1
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0005   3007           00038         movlw   b'00000111'        ; Cargamos b'00000111' en W
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0006   0086           00039         movwf   TRISB           ; Cargamos W en TRISA, RA0 como entrada
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  2
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ Message[305]: Using default destination of 1 (file).
                       00087 
                       00088 ;********** R U T I N A * T E S T E O ******************************************
 002B                  00089 SETTING
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  3
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00140    
                       00141 ;--------------------------------------------------------------------------
                       00142 ; DISPLAY 7 SEGMENTS
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  4
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -186,138 +186,140 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0050   1005           00145         BCF PORTA,0 ;TURN OFF DIGIT 2.
 0051   0827           00146         MOVF Units,0
 0052   2???           00147         CALL SEVENSEG_LOOKUP
-0053   0088           00148         MOVWF PORTD ;PUT DATA ON PORTB.
-0054   1485           00149         BSF PORTA,1 ;TURN ON DIGIT 1.
-0055   0008           00150         RETURN
-                      00151         
-0056                  00152 DISP_UPDATE_TENS
-0056   1085           00153         BCF PORTA,1 ;TURN OFF DIGIT 1.
-0057   0826           00154         MOVF Tens,0
-0058   2???           00155         CALL SEVENSEG_LOOKUP
-0059   0088           00156         MOVWF PORTD ;PUT DATA ON PORTB.
-005A   1405           00157         BSF PORTA,0 ;TURN ON DIGIT 2.
-005B   0008           00158         RETURN
-                      00159 ;--------------------------------------------------------------------------
-                      00160 ; NUMBERIC LOOKUP TABLE FOR 7 SEG
+                      00148         ; para anodo comun complemento (1 -> 0, 0 -> 1)
+0053   0088           00149         MOVWF PORTD ;PUT DATA ON PORTB.
+0054   1485           00150         BSF PORTA,1 ;TURN ON DIGIT 1.
+0055   0008           00151         RETURN
+                      00152         
+0056                  00153 DISP_UPDATE_TENS
+0056   1085           00154         BCF PORTA,1 ;TURN OFF DIGIT 1.
+0057   0826           00155         MOVF Tens,0
+0058   2???           00156         CALL SEVENSEG_LOOKUP
+                      00157         ;para anodo comun complemento (1 -> 0, 0 -> 1)
+0059   0088           00158         MOVWF PORTD ;PUT DATA ON PORTB.
+005A   1405           00159         BSF PORTA,0 ;TURN ON DIGIT 2.
+005B   0008           00160         RETURN
                       00161 ;--------------------------------------------------------------------------
-005C                  00162 SEVENSEG_LOOKUP 
-005C   0782           00163         ADDWF PCL,f
-005D   343F           00164         RETLW 3Fh ; //Hex value to display the number 0.
-005E   3406           00165         RETLW 06h ; //Hex value to display the number 1.
-005F   345B           00166         RETLW 5Bh ; //Hex value to display the number 2.
-0060   344F           00167         RETLW 4Fh ; //Hex value to display the number 3.
-0061   3466           00168         RETLW 66h ; //Hex value to display the number 4.
-0062   346D           00169         RETLW 6Dh ; //Hex value to display the number 5.
-0063   347C           00170         RETLW 7Ch ; //Hex value to display the number 6.
-0064   3407           00171         RETLW 07h ; //Hex value to display the number 7.
-0065   347F           00172         RETLW 7Fh ; //Hex value to display the number 8.
-0066   346F           00173         RETLW 6Fh ; //Hex value to display the number 9.
-0067   0008           00174         RETURN
-                      00175 ;--------------------------------------------------------------------------
-                      00176 ; DELAY 20 MILLISECONDS
+                      00162 ; NUMBERIC LOOKUP TABLE FOR 7 SEG
+                      00163 ;--------------------------------------------------------------------------
+005C                  00164 SEVENSEG_LOOKUP 
+005C   0782           00165         ADDWF PCL,f
+005D   343F           00166         RETLW 3Fh ; //Hex value to display the number 0. 0x40
+005E   3406           00167         RETLW 06h ; //Hex value to display the number 1. 0x79
+005F   345B           00168         RETLW 5Bh ; //Hex value to display the number 2.
+0060   344F           00169         RETLW 4Fh ; //Hex value to display the number 3.
+0061   3466           00170         RETLW 66h ; //Hex value to display the number 4.
+0062   346D           00171         RETLW 6Dh ; //Hex value to display the number 5.
+0063   347C           00172         RETLW 7Ch ; //Hex value to display the number 6.
+0064   3407           00173         RETLW 07h ; //Hex value to display the number 7.
+0065   347F           00174         RETLW 7Fh ; //Hex value to display the number 8.
+0066   346F           00175         RETLW 6Fh ; //Hex value to display the number 9.
+0067   0008           00176         RETURN
                       00177 ;--------------------------------------------------------------------------
-0068                  00178 DELAY_20MS
-0068   30FF           00179         movlw   0xFF                    ;
-0069   00A0           00180         movwf   Contador1               ; Iniciamos contador1.-
-006A                  00181 Repeticion1
-006A   3019           00182         movlw   0x19                    ;
-006B   00A1           00183         movwf   Contador2               ; Iniciamos contador2
-006C                  00184 Repeticion2
-006C   0BA1           00185         decfsz  Contador2,1             ; Decrementa Contador2 y si es 0 sale.-
-006D   2???           00186         goto    Repeticion2             ; Si no es 0 repetimos ciclo.-
-006E   0BA0           00187         decfsz  Contador1,1             ; Decrementa Contador1.-
-006F   2???           00188         goto    Repeticion1             ; Si no es cero repetimos ciclo.-
-0070   0008           00189         return                          ; Regresa de la subrutina.-
-                      00190 
-                      00191 ;--------------------------------------------------------------------------
-                      00192 ; CONVERTER BINARY TO BCD
+                      00178 ; DELAY 20 MILLISECONDS
+                      00179 ;--------------------------------------------------------------------------
+0068                  00180 DELAY_20MS
+0068   30FF           00181         movlw   0xFF                    ;
+0069   00A0           00182         movwf   Contador1               ; Iniciamos contador1.-
+006A                  00183 Repeticion1
+006A   3019           00184         movlw   0x19                    ;
+006B   00A1           00185         movwf   Contador2               ; Iniciamos contador2
+006C                  00186 Repeticion2
+006C   0BA1           00187         decfsz  Contador2,1             ; Decrementa Contador2 y si es 0 sale.-
+006D   2???           00188         goto    Repeticion2             ; Si no es 0 repetimos ciclo.-
+006E   0BA0           00189         decfsz  Contador1,1             ; Decrementa Contador1.-
+006F   2???           00190         goto    Repeticion1             ; Si no es cero repetimos ciclo.-
+0070   0008           00191         return                          ; Regresa de la subrutina.-
+                      00192 
                       00193 ;--------------------------------------------------------------------------
-0071                  00194 Binary2BCD
-0071   01A5           00195         clrf            Hundred
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  5
+                      00194 ; CONVERTER BINARY TO BCD
+                      00195 ;--------------------------------------------------------------------------
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0072   01A6           00196         clrf            Tens
-0073   01A7           00197         clrf            Units
-0074   3008           00198         movlw           0x08
-0075   00A9           00199         movwf           count8
-                      00200         ; check if bin is zero  
-0076   3000           00201         movlw           0x00
-0077   07A8           00202         addwf           bin, f
-0078   1903           00203         btfsc           STATUS, Z
-0079   2???           00204         goto            endBinary2BCD
-007A                  00205 startconversion 
-                      00206         ; rotate MSB from bin into Units
-007A   1003           00207         bcf             STATUS, C
-007B   0DA8           00208         rlf             bin, f
-007C   0DA7           00209         rlf             Units, f
-                      00210         ; check if a carry happened to 5th bit of Units 
-                      00211         ; helps to move the carry from nibble to a different byte
-007D   1E27           00212         btfss           Units, 0x04
-007E   2???           00213         goto            RotateZeroIntoTen
-007F   1403           00214         bsf             STATUS, C
-0080   0DA6           00215         rlf             Tens, f
-0081   2???           00216         goto            completeUnitCarry       
-0082                  00217 RotateZeroIntoTen
-0082   1003           00218         bcf             STATUS, C
-0083   0DA6           00219         rlf             Tens, f
-0084                  00220 completeUnitCarry       
-0084   1227           00221         bcf             Units, 0x04
-                      00222         ; check if a carry happend to the 5th bit of Tens
-                      00223         ; helps to move the carry from nibble to a different byte
-0085   1E26           00224         btfss           Tens, 0x04
-0086   2???           00225         goto            RotateZeroIntoHun
-0087   1403           00226         bsf             STATUS, C
-0088   0DA5           00227         rlf             Hundred, f
-0089   2???           00228         goto            completeTenCarry        
-008A                  00229 RotateZeroIntoHun
-008A   1003           00230         bcf             STATUS, C
-008B   0DA5           00231         rlf             Hundred, f
-008C                  00232 completeTenCarry        
-008C   1226           00233         bcf             Tens, 0x04
-008D   0BA9           00234         decfsz          count8,f
-008E   2???           00235         goto            continue
-008F   2???           00236         goto            endBinary2BCD
-0090                  00237 continue
-                      00238         ; check if you need to add 3 to Units if it is greater or equal to 5
-0090   0827           00239         movf            Units, w
-0091   00AA           00240         movwf           temp
-0092   3005           00241         movlw           0x05
-0093   02AA           00242         subwf           temp, f
-0094   1C03           00243         btfss           STATUS, C
-0095   2???           00244         goto            AfterAdding3
-0096   0827           00245         movf            Units, w
-0097   3E03           00246         addlw           0x03
-0098   00A7           00247         movwf           Units
-0099                  00248 AfterAdding3    
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  6
+0071                  00196 Binary2BCD
+0071   01A5           00197         clrf            Hundred
+0072   01A6           00198         clrf            Tens
+0073   01A7           00199         clrf            Units
+0074   3008           00200         movlw           0x08
+0075   00A9           00201         movwf           count8
+                      00202         ; check if bin is zero  
+0076   3000           00203         movlw           0x00
+0077   07A8           00204         addwf           bin, f
+0078   1903           00205         btfsc           STATUS, Z
+0079   2???           00206         goto            endBinary2BCD
+007A                  00207 startconversion 
+                      00208         ; rotate MSB from bin into Units
+007A   1003           00209         bcf             STATUS, C
+007B   0DA8           00210         rlf             bin, f
+007C   0DA7           00211         rlf             Units, f
+                      00212         ; check if a carry happened to 5th bit of Units 
+                      00213         ; helps to move the carry from nibble to a different byte
+007D   1E27           00214         btfss           Units, 0x04
+007E   2???           00215         goto            RotateZeroIntoTen
+007F   1403           00216         bsf             STATUS, C
+0080   0DA6           00217         rlf             Tens, f
+0081   2???           00218         goto            completeUnitCarry       
+0082                  00219 RotateZeroIntoTen
+0082   1003           00220         bcf             STATUS, C
+0083   0DA6           00221         rlf             Tens, f
+0084                  00222 completeUnitCarry       
+0084   1227           00223         bcf             Units, 0x04
+                      00224         ; check if a carry happend to the 5th bit of Tens
+                      00225         ; helps to move the carry from nibble to a different byte
+0085   1E26           00226         btfss           Tens, 0x04
+0086   2???           00227         goto            RotateZeroIntoHun
+0087   1403           00228         bsf             STATUS, C
+0088   0DA5           00229         rlf             Hundred, f
+0089   2???           00230         goto            completeTenCarry        
+008A                  00231 RotateZeroIntoHun
+008A   1003           00232         bcf             STATUS, C
+008B   0DA5           00233         rlf             Hundred, f
+008C                  00234 completeTenCarry        
+008C   1226           00235         bcf             Tens, 0x04
+008D   0BA9           00236         decfsz          count8,f
+008E   2???           00237         goto            continue
+008F   2???           00238         goto            endBinary2BCD
+0090                  00239 continue
+                      00240         ; check if you need to add 3 to Units if it is greater or equal to 5
+0090   0827           00241         movf            Units, w
+0091   00AA           00242         movwf           temp
+0092   3005           00243         movlw           0x05
+0093   02AA           00244         subwf           temp, f
+0094   1C03           00245         btfss           STATUS, C
+0095   2???           00246         goto            AfterAdding3
+0096   0827           00247         movf            Units, w
+0097   3E03           00248         addlw           0x03
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00249         ; check if you need to add 3 to Tens if it is greater or equal to 5
-0099   0826           00250         movf            Tens, w
-009A   00AA           00251         movwf           temp
-009B   3005           00252         movlw           0x05
-009C   02AA           00253         subwf           temp, f
-009D   1C03           00254         btfss           STATUS, C
-009E   2???           00255         goto            AfterAdding_3
-009F   0826           00256         movf            Tens, w
-00A0   3E03           00257         addlw           0x03
-00A1   00A6           00258         movwf           Tens
-00A2                  00259 AfterAdding_3   
-00A2   2???           00260         goto            startconversion
-00A3                  00261 endBinary2BCD   
-00A3   0008           00262         return
-                      00263         
-                      00264         
+0098   00A7           00249         movwf           Units
+0099                  00250 AfterAdding3    
+                      00251         ; check if you need to add 3 to Tens if it is greater or equal to 5
+0099   0826           00252         movf            Tens, w
+009A   00AA           00253         movwf           temp
+009B   3005           00254         movlw           0x05
+009C   02AA           00255         subwf           temp, f
+009D   1C03           00256         btfss           STATUS, C
+009E   2???           00257         goto            AfterAdding_3
+009F   0826           00258         movf            Tens, w
+00A0   3E03           00259         addlw           0x03
+00A1   00A6           00260         movwf           Tens
+00A2                  00261 AfterAdding_3   
+00A2   2???           00262         goto            startconversion
+00A3                  00263 endBinary2BCD   
+00A3   0008           00264         return
                       00265         
-38F1 3FFF             00266         end
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  7
+                      00266         
+                      00267         
+38F1 3FFF             00268         end
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  7
 
 
 SYMBOL TABLE
@@ -376,7 +378,7 @@ BRG4                              00000004
 BRG5                              00000005
 BRG6                              00000006
 BRG7                              00000007
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  8
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  8
 
 
 SYMBOL TABLE
@@ -435,7 +437,7 @@ CCPR1H                            00000016
 CCPR1L                            00000015
 CCPR2                             0000001B
 CCPR2H                            0000001C
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  9
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE  9
 
 
 SYMBOL TABLE
@@ -494,7 +496,7 @@ FVREN                             00000000
 GCEN                              00000007
 GIE                               00000007
 GO                                00000001
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 10
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 10
 
 
 SYMBOL TABLE
@@ -553,7 +555,7 @@ NOT_RBPU                          00000007
 NOT_RC8                           00000006
 NOT_T1SYNC                        00000002
 NOT_TO                            00000004
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 11
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 11
 
 
 SYMBOL TABLE
@@ -612,7 +614,7 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 12
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 12
 
 
 SYMBOL TABLE
@@ -671,7 +673,7 @@ RSEN                              00000001
 RUN                               00000019
 RX9                               00000006
 RX9D                              00000000
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 13
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 13
 
 
 SYMBOL TABLE
@@ -730,7 +732,7 @@ T1CKPS0                           00000004
 T1CKPS1                           00000005
 T1CON                             00000010
 T1GINV                            00000007
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 14
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 14
 
 
 SYMBOL TABLE
@@ -789,7 +791,7 @@ TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
 TRISC6                            00000006
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 15
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 15
 
 
 SYMBOL TABLE
@@ -848,7 +850,7 @@ W                                 00000000
 WCOL                              00000007
 WDTCON                            00000105
 WDTPS0                            00000001
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 16
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 16
 
 
 SYMBOL TABLE
@@ -907,7 +909,7 @@ _FOSC_INTRC_CLKOUT                00003FFD
 _FOSC_INTRC_NOCLKOUT              00003FFC
 _FOSC_LP                          00003FF8
 _FOSC_XT                          00003FF9
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 17
+MPASM 5.68                      CONTADOR.ASM   10-5-2020  8:48:34         PAGE 17
 
 
 SYMBOL TABLE

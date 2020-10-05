@@ -145,6 +145,7 @@ DISP_UPDATE_UNIT
 	BCF PORTA,0 ;TURN OFF DIGIT 2.
 	MOVF Units,0
 	CALL SEVENSEG_LOOKUP
+	; para anodo comun complemento (1 -> 0, 0 -> 1)
 	MOVWF PORTD ;PUT DATA ON PORTB.
 	BSF PORTA,1 ;TURN ON DIGIT 1.
 	RETURN
@@ -153,6 +154,7 @@ DISP_UPDATE_TENS
 	BCF PORTA,1 ;TURN OFF DIGIT 1.
 	MOVF Tens,0
 	CALL SEVENSEG_LOOKUP
+	;para anodo comun complemento (1 -> 0, 0 -> 1)
 	MOVWF PORTD ;PUT DATA ON PORTB.
 	BSF PORTA,0 ;TURN ON DIGIT 2.
 	RETURN
@@ -161,8 +163,8 @@ DISP_UPDATE_TENS
 ;--------------------------------------------------------------------------
 SEVENSEG_LOOKUP 
 	ADDWF PCL,f
-	RETLW 3Fh ; //Hex value to display the number 0.
-	RETLW 06h ; //Hex value to display the number 1.
+	RETLW 3Fh ; //Hex value to display the number 0. 0x40
+	RETLW 06h ; //Hex value to display the number 1. 0x79
 	RETLW 5Bh ; //Hex value to display the number 2.
 	RETLW 4Fh ; //Hex value to display the number 3.
 	RETLW 66h ; //Hex value to display the number 4.
