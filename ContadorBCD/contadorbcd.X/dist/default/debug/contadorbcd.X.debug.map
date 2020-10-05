@@ -1,13 +1,13 @@
 MPLINK 5.08, LINKER
-Linker Map File - Created Sun Oct 04 21:00:02 2020
+Linker Map File - Created Sun Oct 04 21:00:21 2020
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                    .org_0       code   0x000000    program   0x000148
                    .cinit    romdata   0x0000a4    program   0x000004
-.config_2007_BUILD/DEFAULT/PRODUCTION/CONTADO       code   0x002007    program   0x000002
-.config_2008_BUILD/DEFAULT/PRODUCTION/CONTADO       code   0x002008    program   0x000002
+.config_2007_BUILD/DEFAULT/DEBUG/CONTADOR.O       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/DEBUG/CONTADOR.O       code   0x002008    program   0x000002
 
 
 

@@ -1,4 +1,4 @@
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  1
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0005   3007           00038         movlw   b'00000111'        ; Cargamos b'00000111' en W
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0006   0086           00039         movwf   TRISB           ; Cargamos W en TRISA, RA0 como entrada
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  2
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ Message[305]: Using default destination of 1 (file).
                       00087 
                       00088 ;********** R U T I N A * T E S T E O ******************************************
 002B                  00089 SETTING
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  3
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00140    
                       00141 ;--------------------------------------------------------------------------
                       00142 ; DISPLAY 7 SEGMENTS
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  4
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -234,7 +234,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00193 ;--------------------------------------------------------------------------
 0071                  00194 Binary2BCD
 0071   01A5           00195         clrf            Hundred
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  5
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -293,7 +293,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0097   3E03           00246         addlw           0x03
 0098   00A7           00247         movwf           Units
 0099                  00248 AfterAdding3    
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  6
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -317,7 +317,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00264         
                       00265         
 38F1 3FFF             00266         end
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  7
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  7
 
 
 SYMBOL TABLE
@@ -376,7 +376,7 @@ BRG4                              00000004
 BRG5                              00000005
 BRG6                              00000006
 BRG7                              00000007
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  8
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  8
 
 
 SYMBOL TABLE
@@ -435,7 +435,7 @@ CCPR1H                            00000016
 CCPR1L                            00000015
 CCPR2                             0000001B
 CCPR2H                            0000001C
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE  9
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE  9
 
 
 SYMBOL TABLE
@@ -494,7 +494,7 @@ FVREN                             00000000
 GCEN                              00000007
 GIE                               00000007
 GO                                00000001
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 10
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 10
 
 
 SYMBOL TABLE
@@ -553,7 +553,7 @@ NOT_RBPU                          00000007
 NOT_RC8                           00000006
 NOT_T1SYNC                        00000002
 NOT_TO                            00000004
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 11
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 11
 
 
 SYMBOL TABLE
@@ -612,7 +612,7 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 12
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 12
 
 
 SYMBOL TABLE
@@ -671,7 +671,7 @@ RSEN                              00000001
 RUN                               00000019
 RX9                               00000006
 RX9D                              00000000
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 13
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 13
 
 
 SYMBOL TABLE
@@ -730,7 +730,7 @@ T1CKPS0                           00000004
 T1CKPS1                           00000005
 T1CON                             00000010
 T1GINV                            00000007
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 14
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 14
 
 
 SYMBOL TABLE
@@ -789,7 +789,7 @@ TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
 TRISC6                            00000006
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 15
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 15
 
 
 SYMBOL TABLE
@@ -848,7 +848,7 @@ W                                 00000000
 WCOL                              00000007
 WDTCON                            00000105
 WDTPS0                            00000001
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 16
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 16
 
 
 SYMBOL TABLE
@@ -907,7 +907,7 @@ _FOSC_INTRC_CLKOUT                00003FFD
 _FOSC_INTRC_NOCLKOUT              00003FFC
 _FOSC_LP                          00003FF8
 _FOSC_XT                          00003FF9
-MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:01         PAGE 17
+MPASM 5.68                      CONTADOR.ASM   10-4-2020  21:00:20         PAGE 17
 
 
 SYMBOL TABLE
@@ -941,6 +941,8 @@ _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
 _XT_OSC                           00003FF9
 __16F887                          00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
 bin                               00000028
 completeTenCarry                  0000008C
 completeUnitCarry                 00000084

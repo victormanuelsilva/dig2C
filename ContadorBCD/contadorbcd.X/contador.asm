@@ -9,12 +9,17 @@
     LIST p=16F887
     INCLUDE <P16F887.INC>
 
- 
-Contador1 EQU 0x20
-Contador2 EQU 0x21
-DISP_COUNTER EQU 0x22
-DISP_FREQ EQU 0x24
- 
+Boton_asc	EQU     0       ; Definimos Led como RB0
+Boton_dsc	EQU     1       ; Definimos Led como RB1
+Switch_activar	EQU     2       ; Definimos Led como RB2
+    
+
+Contador1	EQU 0x20
+Contador2	EQU 0x21
+DISP_COUNTER	EQU 0x22
+DISP_DEFAULT	EQU 0x23
+DISP_FREQ	EQU 0x24
+
 Hundred	EQU 0x25
 Tens	EQU 0x26
 Units	EQU 0x27	
@@ -26,22 +31,34 @@ temp	EQU 0x2A
     goto INIT
  ;**** Configurar el puerto****
 INIT
-	bsf STATUS,5 ; Cambia al Banco 1
-	movlw 00h ; Configura los pines del puerto B ...
+	bsf STATUS,RP0 ; Cambia al Banco 1
+	movlw 00h ; Configura los pines del puerto D ...
 	movwf TRISD ; ...como salidas.
 	movwf TRISA ; ...como salidas.
+	movlw	b'00000111'        ; Cargamos b'00000111' en W
+	movwf	TRISB           ; Cargamos W en TRISA, RA0 como entrada
 	
-	bcf STATUS,5 ; Vuelve al Banco 0
-	movlw 00h ; Configura nuestro registro w con 02h
+	BSF STATUS,RP1 ; Accede a banco 3
+	CLRF ANSEL  ; 
+	CLRF ANSELH ;
+	BCF STATUS,RP0 ; Regresa a banco 0 RP0 = 0
+	BCF STATUS,RP1 ; Regresa a banco 0 RP1 = 0
+	
+	movlw 00h ; Configura nuestro registro w con 00h
 	movwf PORTD ; ...como salidas.
 	movwf PORTA ; ...como salidas.
 	movlw 20h ; Configura nuestro registro w con 02h
 	movwf DISP_FREQ
 	movlw 20h ; Configura nuestro registro w con 02h
+	movwf DISP_DEFAULT
 	movwf DISP_COUNTER
 	MOVWF bin ; 0x20
 	CALL Binary2BCD ; tens = 3 unit = 2 
 MAIN
+	btfss PORTB,Switch_activar	    ; Esta pulsado el Boton (RA0=1??)
+	GOTO RUN
+	GOTO SETTING
+RUN
 	CALL DISP_UPDATE_UNIT ; 2
 	CALL DELAY_20MS
 	CALL DISP_UPDATE_TENS; 3
@@ -51,7 +68,6 @@ MAIN
 	DECFSZ DISP_COUNTER,F ;0x1f = 31 decimal
 	GOTO INIT_FREQ
 	CALL INIT_COUNTER
-
 INIT_FREQ
 	MOVF DISP_COUNTER,0
 	MOVWF bin ; 0x20
@@ -65,10 +81,63 @@ INIT_FREQ
 ;--------------------------------------------------------------------------	
 
 INIT_COUNTER
-	movlw 20h ; Configura nuestro registro w con 02h
-	movwf DISP_COUNTER
+	movf DISP_DEFAULT,0 ; Muevo el valor por defecto al registro W
+	movwf DISP_COUNTER  ; cargo el valor del registro W al Contador
+	RETURN
+
+;********** R U T I N A * T E S T E O ******************************************
+SETTING
+	CALL UPDATE_BTN_ASC
+	CALL UPDATE_BTN_DSC
+	CALL INIT_COUNTER
+	MOVF DISP_COUNTER,0
+	MOVWF bin ; 0x20
+	CALL Binary2BCD ; tens = 3 unit = 2
+	CALL DISP_UPDATE_UNIT ; 2
+	CALL DELAY_20MS
+	CALL DISP_UPDATE_TENS; 3
+	CALL DELAY_20MS
+	
+	GOTO INIT_FREQ
+	
+	
+UPDATE_BTN_ASC
+	btfss	PORTB,Boton_asc	    ; Esta pulsado el Boton (RA0=1??)
+	goto	END_BTN_ASC	    ; No??, seguimos testeando
+	call	DELAY_20MS        ; Si??, Eliminamos efecto rebote
+	btfss	PORTB,Boton_asc	    ; Testeamos nuevamente
+	goto	END_BTN_ASC	    ; Falsa Alarma, seguimos testeando
+	incf	DISP_DEFAULT,1   ; Se ha pulsado, incrementamos Valor Default
+RELEASE_BTN_ASC
+	btfsc	PORTB,Boton_asc         ; Boton se dejo de pulsar??
+	goto	RELEASE_BTN_ASC	    ; No??, PCL - 1, --> btfsc PORTA,Boton
+	call    DELAY_20MS		; Si??, Eliminamos efecto rebote
+	btfsc	PORTB,Boton_asc         ; Testeamos nuevamente si se dejo de pulsar
+	goto	RELEASE_BTN_ASC                ; No??, Falsa alarma, volvemos a checar
+	goto	END_BTN_ASC	    ; Falsa Alarma, seguimos testeando
+	
+END_BTN_ASC
+	RETURN
+
+UPDATE_BTN_DSC
+	btfss	PORTB,Boton_dsc	    ; Esta pulsado el Boton (RA0=1??)
+	goto	END_BTN_DSC	    ; No??, seguimos testeando
+	call	DELAY_20MS        ; Si??, Eliminamos efecto rebote
+	btfss	PORTB,Boton_dsc	    ; Testeamos nuevamente
+	goto	END_BTN_DSC	    ; Falsa Alarma, seguimos testeando
+	decf	DISP_DEFAULT,1   ; Se ha pulsado, incrementamos Valor Default
+RELEASE_BTN_DSC
+	btfsc	PORTB,Boton_dsc         ; Boton se dejo de pulsar??
+	goto	RELEASE_BTN_DSC	    ; No??, PCL - 1, --> btfsc PORTA,Boton
+	call    DELAY_20MS		; Si??, Eliminamos efecto rebote
+	btfsc	PORTB,Boton_dsc         ; Testeamos nuevamente si se dejo de pulsar
+	goto	RELEASE_BTN_DSC                ; No??, Falsa alarma, volvemos a checar
+	goto	END_BTN_DSC	    ; Falsa Alarma, seguimos testeando
+
+END_BTN_DSC
 	RETURN
 	
+   
 ;--------------------------------------------------------------------------
 ; DISPLAY 7 SEGMENTS
 ;--------------------------------------------------------------------------	
