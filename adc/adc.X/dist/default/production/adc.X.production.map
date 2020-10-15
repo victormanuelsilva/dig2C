@@ -1,0 +1,89 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Thu Oct 15 10:25:05 2020
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x00014c
+                   .cinit    romdata   0x0000a6    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/ADCPOLL       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/PRODUCTION/ADCPOLL       code   0x002008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x0000a7      
+                            0x002007    0x002008      
+            170 out of 8455 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             AfterAdding3   0x00009b    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+            AfterAdding_3   0x0000a4    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               Binary2BCD   0x000073    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                  CONVERT   0x000040    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               DELAY_20MS   0x00006a    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+         DISP_UPDATE_TENS   0x000058    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+         DISP_UPDATE_UNIT   0x000052    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                     INIT   0x000001    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                      RUN   0x000038    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                  RUN_ADC   0x000018    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               Repeticion   0x000035    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+              Repeticion1   0x00006c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+              Repeticion2   0x00006e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+        RotateZeroIntoHun   0x00008c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+        RotateZeroIntoTen   0x000084    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+          SEVENSEG_LOOKUP   0x00005e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                     SHOW   0x000026    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               SampleTime   0x000033    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                 WAIT_ACQ   0x00001c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+         completeTenCarry   0x00008e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+        completeUnitCarry   0x000086    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                 continue   0x000092    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+            endBinary2BCD   0x0000a5    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                 fin_show   0x000032    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                    setl8   0x00002c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                    setl9   0x000031    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                  show_L9   0x00002d    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+          startconversion   0x00007c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     INIT   0x000001    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                  RUN_ADC   0x000018    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                 WAIT_ACQ   0x00001c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                     SHOW   0x000026    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                    setl8   0x00002c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                  show_L9   0x00002d    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                    setl9   0x000031    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                 fin_show   0x000032    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               SampleTime   0x000033    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               Repeticion   0x000035    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                      RUN   0x000038    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                  CONVERT   0x000040    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+         DISP_UPDATE_UNIT   0x000052    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+         DISP_UPDATE_TENS   0x000058    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+          SEVENSEG_LOOKUP   0x00005e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               DELAY_20MS   0x00006a    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+              Repeticion1   0x00006c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+              Repeticion2   0x00006e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+               Binary2BCD   0x000073    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+          startconversion   0x00007c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+        RotateZeroIntoTen   0x000084    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+        completeUnitCarry   0x000086    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+        RotateZeroIntoHun   0x00008c    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+         completeTenCarry   0x00008e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+                 continue   0x000092    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+             AfterAdding3   0x00009b    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+            AfterAdding_3   0x0000a4    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+            endBinary2BCD   0x0000a5    program     static C:\Users\ASUS\Documents\GitHub\dig2C\adc\adc.X\adcpolling8bit.asm
+
+
