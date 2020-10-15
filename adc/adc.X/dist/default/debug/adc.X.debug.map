@@ -1,13 +1,13 @@
 MPLINK 5.08, LINKER
-Linker Map File - Created Thu Oct 15 10:43:09 2020
+Linker Map File - Created Thu Oct 15 10:44:56 2020
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                    .org_0       code   0x000000    program   0x000154
                    .cinit    romdata   0x0000aa    program   0x000004
-.config_2007_BUILD/DEFAULT/PRODUCTION/ADCPOLL       code   0x002007    program   0x000002
-.config_2008_BUILD/DEFAULT/PRODUCTION/ADCPOLL       code   0x002008    program   0x000002
+.config_2007_BUILD/DEFAULT/DEBUG/ADCPOLLING8B       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/DEBUG/ADCPOLLING8B       code   0x002008    program   0x000002
 
 
 

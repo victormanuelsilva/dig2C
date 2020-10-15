@@ -53,6 +53,12 @@ INIT
 	BCF	ANSEL,7		;Set RA7 to digital
 	CLRF	ANSELH
 
+	MOVLW d'25'
+	MOVWF temp
+	MOVLW d'25'
+	SUBWF temp,0
+	
+	
 	MOVLW B'10010111'
 	MOVWF temp
 	CALL CONVERT

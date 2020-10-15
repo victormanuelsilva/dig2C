@@ -1,4 +1,4 @@
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  1
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0003   009F           00040         MOVWF   ADCON1          ;Vdd and Vss as Vref
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  2
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -86,7 +86,7 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
                       00055 
 0013   3019           00056         MOVLW d'25'
 0014   00AA           00057         MOVWF temp
-0015   3014           00058         MOVLW d'20'
+0015   3019           00058         MOVLW d'25'
 0016   022A           00059         SUBWF temp,0
                       00060         
                       00061         
@@ -116,7 +116,7 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
                       00085 
 002A                  00086 SHOW
 002A   1283           00087         BCF     STATUS,RP0
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  3
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0051   1003           00138         BCF STATUS,0
 0052   0CAA           00139         RRF temp,1
 0053   1003           00140         BCF STATUS,0
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  4
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -234,7 +234,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0073   2???           00191         goto    Repeticion2             ; Si no es 0 repetimos ciclo.-
 0074   0BA3           00192         decfsz  Contador1,1             ; Decrementa Contador1.-
 0075   2???           00193         goto    Repeticion1             ; Si no es cero repetimos ciclo.-
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  5
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -293,7 +293,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0096   0827           00244         movf            Units, w
 0097   00AA           00245         movwf           temp
 0098   3005           00246         movlw           0x05
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  6
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -323,7 +323,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00268 
                       00269         
 38F1 3FFF             00270         end
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  7
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  7
 
 
 SYMBOL TABLE
@@ -382,7 +382,7 @@ BRG4                              00000004
 BRG5                              00000005
 BRG6                              00000006
 BRG7                              00000007
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  8
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  8
 
 
 SYMBOL TABLE
@@ -441,7 +441,7 @@ CCPR2                             0000001B
 CCPR2H                            0000001C
 CCPR2L                            0000001B
 CHS0                              00000002
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE  9
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE  9
 
 
 SYMBOL TABLE
@@ -500,7 +500,7 @@ GO                                00000001
 GO_DONE                           00000001
 GO_NOT_DONE                       00000001
 HTS                               00000002
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 10
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 10
 
 
 SYMBOL TABLE
@@ -559,7 +559,7 @@ NOT_WRITE                         00000002
 OERR                              00000001
 OPTION_REG                        00000081
 OSCCON                            0000008F
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 11
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 11
 
 
 SYMBOL TABLE
@@ -618,7 +618,7 @@ RA6                               00000006
 RA7                               00000007
 RB0                               00000000
 RB1                               00000001
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 12
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 12
 
 
 SYMBOL TABLE
@@ -677,7 +677,7 @@ R_W                               00000002
 Repeticion                        00000039
 Repeticion1                       00000070
 Repeticion2                       00000072
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 13
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 13
 
 
 SYMBOL TABLE
@@ -736,7 +736,7 @@ T1GIV                             00000007
 T1GSS                             00000001
 T1INSYNC                          00000002
 T1OSCEN                           00000003
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 14
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 14
 
 
 SYMBOL TABLE
@@ -795,7 +795,7 @@ TRISC7                            00000007
 TRISD                             00000088
 TRISD0                            00000000
 TRISD1                            00000001
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 15
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 15
 
 
 SYMBOL TABLE
@@ -854,7 +854,7 @@ WDTPS2                            00000003
 WDTPS3                            00000004
 WPUB                              00000095
 WPUB0                             00000000
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 16
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 16
 
 
 SYMBOL TABLE
@@ -913,7 +913,7 @@ _IDLOC0                           00002000
 _IDLOC1                           00002001
 _IDLOC2                           00002002
 _IDLOC3                           00002003
-MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:43:08         PAGE 17
+MPASM 5.68                ADCPOLLING8BIT.ASM   10-15-2020  10:44:55         PAGE 17
 
 
 SYMBOL TABLE
@@ -942,6 +942,8 @@ _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
 _XT_OSC                           00003FF9
 __16F887                          00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
 bin                               00000028
 completeTenCarry                  00000092
 completeUnitCarry                 0000008A
