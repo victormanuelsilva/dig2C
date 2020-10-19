@@ -1,0 +1,50 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Mon Oct 19 09:05:06 2020
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x000002
+                   .org_2       code   0x000005    program   0x000040
+.config_2007_BUILD/DEFAULT/PRODUCTION/TIMER0C       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/PRODUCTION/TIMER0C       code   0x002008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x000024      
+                            0x002007    0x002008      
+            38 out of 8455 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+           Actualizo_TMR0   0x00001a    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+                    Bucle   0x000010    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+                  Fin_ISR   0x000020    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+                      ISR   0x000015    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+                   Inicio   0x000005    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+               Inicio_ISR   0x000012    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+               Prendo_led   0x00001e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   Inicio   0x000005    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+                    Bucle   0x000010    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+               Inicio_ISR   0x000012    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+                      ISR   0x000015    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+           Actualizo_TMR0   0x00001a    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+               Prendo_led   0x00001e    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+                  Fin_ISR   0x000020    program     static C:\Users\ASUS\Documents\GitHub\dig2C\timer0\timer0.X\timer0Cont.asm
+
+
