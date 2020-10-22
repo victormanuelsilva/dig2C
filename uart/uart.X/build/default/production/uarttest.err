@@ -1,6 +1,7 @@
-Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 29 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 48 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 50 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 52 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 54 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 55 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 41 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 60 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 62 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 64 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 66 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 67 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ASUS\DOCUMENTS\GITHUB\DIG2C\UART\UART.X\UARTTEST.ASM 105 : Register in operand not in bank 0.  Ensure that bank bits are correct.

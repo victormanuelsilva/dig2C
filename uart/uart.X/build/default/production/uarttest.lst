@@ -1,4 +1,4 @@
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  1
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -26,73 +26,227 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009 
                       00810         LIST
                       00011 
-                      00012 ; NOTA:
-                      00013 ; Oscilador utilizado 4MHz.-
-                      00014 ; ************************************************
+  00000020            00012 numpasajeros equ 0x20
+  00000023            00013 Contador1       equ 0x23
+  00000024            00014 Contador2       equ 0x24
                       00015 
-                      00016 ; ------------------------------Código modificado-------------------------------------
-                      00017 ; inicio
-                      00018           org     0x00
-0000   2???           00019           goto    inicio
-                      00020           org     0x04
-0004   2???           00021           goto    INTER
-                      00022 
-                      00023 ; Se transmite via Serie el dato que esta en el registro W
-0005   120C           00024 TX_DATO   bcf     PIR1,TXIF      ; Restaura el flag del transmisor
-0006   0099           00025           movwf   TXREG          ; Mueve el byte a transmitir al registro de transmision
-0007   1683           00026           bsf     STATUS,RP0     ; Bank01
-0008   1303           00027           bcf     STATUS,RP1
-                      00028 
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0009   1C98           00029 TX_DAT_W  btfss   TXSTA,TRMT     ; ¿Byte transmitido?
-000A   2???           00030           goto    TX_DAT_W       ; No, esperar
-000B   1283           00031           bcf     STATUS,RP0     ; Si, vuelta a Bank00
-000C   0008           00032           return
+  00000025            00016 Hundred equ 0x25
+  00000026            00017 Tens    equ 0x26
+  00000027            00018 Units   equ 0x27        
+  00000028            00019 bin     equ 0x28
+  00000029            00020 count8  equ 0x29
+  0000002A            00021 temp    equ 0x2A
+                      00022         
+                      00023 ; NOTA:
+                      00024 ; Oscilador utilizado 4MHz.-
+                      00025 ; ************************************************
+                      00026 
+                      00027 ; ------------------------------Código modificado-------------------------------------
+                      00028 ; inicio
+                      00029           org     0x00
+0000   2???           00030           goto    inicio
+                      00031           org     0x04
+0004   2???           00032           goto    INTER
                       00033 
-                      00034 ; Tratamiento de interrupción
-000D   1E8C           00035 INTER     btfss   PIR1,RCIF      ; ¿Interrupción por recepción?
-000E   2???           00036           goto    VOLVER         ; No, falsa interrupción
-000F   128C           00037           bcf     PIR1,RCIF      ; Si, reponer flag
-0010   081A           00038           movf    RCREG,W        ; Lectura del dato recibido
-0011   0086           00039           movwf   PORTB          ; Visualización del dato
-0012   2???           00040           call    TX_DATO        ; Transmisión del dato como eco
-0013   0009           00041 VOLVER    retfie
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  2
+                      00034 ; Se transmite via Serie el dato que esta en el registro W
+0005   120C           00035 TX_DATO   bcf     PIR1,TXIF      ; Restaura el flag del transmisor
+0006   0820           00036           movf numpasajeros,w
+0007   0099           00037           movwf   TXREG          ; Mueve el byte a transmitir al registro de transmision
+0008   1683           00038           bsf     STATUS,RP0     ; Bank01
+0009   1303           00039           bcf     STATUS,RP1
+                      00040 
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000A   1C98           00041 TX_DAT_W  btfss   TXSTA,TRMT     ; ¿Byte transmitido?
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00042 
-                      00043 ; Comienzo del programa principal
-0014   0186           00044 inicio    clrf    PORTB          ; Limpiar salidas
-0015   0187           00045           clrf    PORTC
-0016   1683           00046           bsf     STATUS,RP0     ; Bank01
-0017   1303           00047           bcf     STATUS,RP1
+000B   2???           00042           goto    TX_DAT_W       ; No, esperar
+000C   1283           00043           bcf     STATUS,RP0     ; Si, vuelta a Bank00
+000D   0008           00044           return
+                      00045 
+                      00046 ; Tratamiento de interrupción
+000E   1E8C           00047 INTER     btfss   PIR1,RCIF      ; ¿Interrupción por recepción?
+000F   2???           00048           goto    VOLVER         ; No, falsa interrupción
+0010   128C           00049           bcf     PIR1,RCIF      ; Si, reponer flag
+0011   081A           00050           movf    RCREG,W        ; Lectura del dato recibido
+0012   0086           00051           movwf   PORTB          ; Visualización del dato
+0013   2???           00052           call    TX_DATO        ; Transmisión del dato como eco
+0014   0009           00053 VOLVER    retfie
+                      00054 
+                      00055 ; Comienzo del programa principal
+0015   0186           00056 inicio    clrf    PORTB          ; Limpiar salidas
+0016   0187           00057           clrf    PORTC
+0017   1683           00058           bsf     STATUS,RP0     ; Bank01
+0018   1303           00059           bcf     STATUS,RP1
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0018   0186           00048           clrf    TRISB          ; PORTB como salida
-0019   30BF           00049           movlw   b'10111111'    ; RC7/RX entrada,
+0019   0186           00060           clrf    TRISB          ; PORTB como salida
+001A   30BF           00061           movlw   b'10111111'    ; RC7/RX entrada,
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001A   0087           00050           movwf   TRISC          ; RC6/TX salida
-001B   3024           00051           movlw   b'00100100'    ; Configuración USART
+001B   0087           00062           movwf   TRISC          ; RC6/TX salida
+001C   3024           00063           movlw   b'00100100'    ; Configuración USART
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001C   0098           00052           movwf   TXSTA          ; y activación de transmisión
-001D   3019           00053           movlw   .25            ; 9600 baudios
+001D   0098           00064           movwf   TXSTA          ; y activación de transmisión
+001E   3019           00065           movlw   .25            ; 9600 baudios
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001E   0099           00054           movwf   SPBRG
+001F   0099           00066           movwf   SPBRG
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001F   168C           00055           bsf     PIE1,RCIE      ; Habilita interrupción en recepción
-0020   1283           00056           bcf     STATUS,RP0     ; Bank00
-0021   3090           00057           movlw   b'10010000'    ; Configuración del USART para recepción continua
-0022   0098           00058           movwf   RCSTA          ; Puesta en ON
-0023   30C0           00059           movlw   b'11000000'    ; Habilitación de las
-0024   008B           00060           movwf   INTCON         ; interrupciones en general
-                      00061 
-0025   0000           00062 BUCLE     nop
-0026   2???           00063           goto    BUCLE
-                      00064 
-38F1 3FFF             00065           end
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  3
+0020   168C           00067           bsf     PIE1,RCIE      ; Habilita interrupción en recepción
+0021   1283           00068           bcf     STATUS,RP0     ; Bank00
+0022   3090           00069           movlw   b'10010000'    ; Configuración del USART para recepción continua
+0023   0098           00070           movwf   RCSTA          ; Puesta en ON
+0024   30C0           00071           movlw   b'11000000'    ; Habilitación de las
+0025   008B           00072           movwf   INTCON         ; interrupciones en general
+                      00073 
+0026   0000           00074 BUCLE     nop
+                      00075           ;nit = 2
+                      00076           ;nit + 0x30
+0027   3032           00077           movlw 0x32; numero 2 en ascii
+0028   2???           00078           CALL TX_DATO1
+0029   2???           00079           CALL DELAY_20MS
+                      00080           ;ens = 3
+                      00081           ;ens + 0x30
+002A   3033           00082           movlw 0x33; numero 3 en acii
+002B   2???           00083           CALL TX_DATO1
+002C   2???           00084           CALL DELAY_20MS
+002D   300A           00085           movlw 0x0A;numero \r
+002E   2???           00086           CALL TX_DATO1
+002F   2???           00087           CALL DELAY_20MS
+0030   300D           00088           movlw 0x0d;numero \n
+0031   2???           00089           CALL TX_DATO1
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0032   2???           00090           CALL DELAY_20MS
+0033   2???           00091           CALL DELAY_20MS
+0034   2???           00092           CALL DELAY_20MS
+0035   2???           00093           CALL DELAY_20MS
+0036   2???           00094           CALL DELAY_20MS
+0037   2???           00095           CALL DELAY_20MS
+0038   2???           00096           goto    BUCLE
+                      00097 
+0039   120C           00098 TX_DATO1  bcf     PIR1,TXIF      ; Restaura el flag del transmisor
+                      00099           ;movwf numpasajeros
+                      00100           ;movf numpasajeros,w
+003A   0099           00101           movwf   TXREG          ; Mueve el byte a transmitir al registro de transmision
+003B   1683           00102           bsf     STATUS,RP0     ; Bank01
+003C   1303           00103           bcf     STATUS,RP1
+                      00104 
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+003D   1C98           00105 TX_DAT_1  btfss   TXSTA,TRMT     ; ¿Byte transmitido?
+003E   2???           00106           goto    TX_DAT_W       ; No, esperar
+003F   1283           00107           bcf     STATUS,RP0     ; Si, vuelta a Bank00
+0040   0008           00108           return
+                      00109           
+                      00110 ;--------------------------------------------------------------------------
+                      00111 ; DELAY 20 MILLISECONDS
+                      00112 ;--------------------------------------------------------------------------
+0041                  00113 DELAY_20MS
+0041   30FF           00114         movlw   0xFF                    ;
+0042   00A3           00115         movwf   Contador1               ; Iniciamos contador1.-
+0043                  00116 Repeticion1
+0043   3019           00117         movlw   0x19                    ;
+0044   00A4           00118         movwf   Contador2               ; Iniciamos contador2
+0045                  00119 Repeticion2
+0045   0BA4           00120         decfsz  Contador2,1             ; Decrementa Contador2 y si es 0 sale.-
+0046   2???           00121         goto    Repeticion2             ; Si no es 0 repetimos ciclo.-
+0047   0BA3           00122         decfsz  Contador1,1             ; Decrementa Contador1.-
+0048   2???           00123         goto    Repeticion1             ; Si no es cero repetimos ciclo.-
+0049   0008           00124         return                          ; Regresa de la subrutina.-       
+                      00125 
+                      00126 ;--------------------------------------------------------------------------
+                      00127 ; CONVERTER BINARY TO BCD
+                      00128 ;--------------------------------------------------------------------------
+004A                  00129 Binary2BCD
+004A   01A5           00130         clrf            Hundred
+004B   01A6           00131         clrf            Tens
+004C   01A7           00132         clrf            Units
+004D   3008           00133         movlw           0x08
+004E   00A9           00134         movwf           count8
+                      00135         ; check if bin is zero  
+004F   3000           00136         movlw           0x00
+0050   07A8           00137         addwf           bin, f
+0051   1903           00138         btfsc           STATUS, Z
+0052   2???           00139         goto            endBinary2BCD
+0053                  00140 startconversion 
+                      00141         ; rotate MSB from bin into Units
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0053   1003           00142         bcf             STATUS, C
+0054   0DA8           00143         rlf             bin, f
+0055   0DA7           00144         rlf             Units, f
+                      00145         ; check if a carry happened to 5th bit of Units 
+                      00146         ; helps to move the carry from nibble to a different byte
+0056   1E27           00147         btfss           Units, 0x04
+0057   2???           00148         goto            RotateZeroIntoTen
+0058   1403           00149         bsf             STATUS, C
+0059   0DA6           00150         rlf             Tens, f
+005A   2???           00151         goto            completeUnitCarry       
+005B                  00152 RotateZeroIntoTen
+005B   1003           00153         bcf             STATUS, C
+005C   0DA6           00154         rlf             Tens, f
+005D                  00155 completeUnitCarry       
+005D   1227           00156         bcf             Units, 0x04
+                      00157         ; check if a carry happend to the 5th bit of Tens
+                      00158         ; helps to move the carry from nibble to a different byte
+005E   1E26           00159         btfss           Tens, 0x04
+005F   2???           00160         goto            RotateZeroIntoHun
+0060   1403           00161         bsf             STATUS, C
+0061   0DA5           00162         rlf             Hundred, f
+0062   2???           00163         goto            completeTenCarry        
+0063                  00164 RotateZeroIntoHun
+0063   1003           00165         bcf             STATUS, C
+0064   0DA5           00166         rlf             Hundred, f
+0065                  00167 completeTenCarry        
+0065   1226           00168         bcf             Tens, 0x04
+0066   0BA9           00169         decfsz          count8,f
+0067   2???           00170         goto            continue
+0068   2???           00171         goto            endBinary2BCD
+0069                  00172 continue
+                      00173         ; check if you need to add 3 to Units if it is greater or equal to 5
+0069   0827           00174         movf            Units, w
+006A   00AA           00175         movwf           temp
+006B   3005           00176         movlw           0x05
+006C   02AA           00177         subwf           temp, f
+006D   1C03           00178         btfss           STATUS, C
+006E   2???           00179         goto            AfterAdding3
+006F   0827           00180         movf            Units, w
+0070   3E03           00181         addlw           0x03
+0071   00A7           00182         movwf           Units
+0072                  00183 AfterAdding3    
+                      00184         ; check if you need to add 3 to Tens if it is greater or equal to 5
+0072   0826           00185         movf            Tens, w
+0073   00AA           00186         movwf           temp
+0074   3005           00187         movlw           0x05
+0075   02AA           00188         subwf           temp, f
+0076   1C03           00189         btfss           STATUS, C
+0077   2???           00190         goto            AfterAdding_3
+0078   0826           00191         movf            Tens, w
+0079   3E03           00192         addlw           0x03
+007A   00A6           00193         movwf           Tens
+007B                  00194 AfterAdding_3   
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+007B   2???           00195         goto            startconversion
+007C                  00196 endBinary2BCD   
+007C   0008           00197         return
+                      00198 
+                      00199         
+38F1 3FFF             00200         end
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  6
 
 
 SYMBOL TABLE
@@ -130,6 +284,8 @@ ANS8                              00000000
 ANS9                              00000001
 ANSEL                             00000188
 ANSELH                            00000189
+AfterAdding3                      00000072
+AfterAdding_3                     0000007B
 BAUDCTL                           00000187
 BCLIE                             00000003
 BCLIF                             00000003
@@ -149,16 +305,17 @@ BRG4                              00000004
 BRG5                              00000005
 BRG6                              00000006
 BRG7                              00000007
-BRG8                              00000000
-BRG9                              00000001
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  4
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  7
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+BRG8                              00000000
+BRG9                              00000001
 BRGH                              00000002
-BUCLE                             00000025
+BUCLE                             00000026
+Binary2BCD                        0000004A
 C                                 00000000
 C1CH0                             00000000
 C1CH1                             00000001
@@ -207,15 +364,15 @@ CCPR1L                            00000015
 CCPR2                             0000001B
 CCPR2H                            0000001C
 CCPR2L                            0000001B
-CHS0                              00000002
-CHS1                              00000003
-CHS2                              00000004
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  5
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  8
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CHS0                              00000002
+CHS1                              00000003
+CHS2                              00000004
 CHS3                              00000005
 CKE                               00000006
 CKP                               00000004
@@ -224,6 +381,8 @@ CM2CON0                           00000108
 CM2CON1                           00000109
 CREN                              00000004
 CSRC                              00000007
+Contador1                         00000023
+Contador2                         00000024
 D                                 00000005
 DATA_ADDRESS                      00000005
 DC                                00000001
@@ -231,6 +390,7 @@ DC1B0                             00000004
 DC1B1                             00000005
 DC2B0                             00000004
 DC2B1                             00000005
+DELAY_20MS                        00000041
 D_A                               00000005
 D_NOT_A                           00000005
 ECCPAS                            0000009C
@@ -258,23 +418,24 @@ GO                                00000001
 GO_DONE                           00000001
 GO_NOT_DONE                       00000001
 HTS                               00000002
+Hundred                           00000025
 I2C_DATA                          00000005
 I2C_READ                          00000002
 I2C_START                         00000003
 I2C_STOP                          00000004
-INDF                              00000000
-INTCON                            0000000B
-INTE                              00000004
-INTEDG                            00000006
-INTER                             0000000D
-INTF                              00000001
-IOCB                              00000096
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  6
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE  9
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTER                             0000000E
+INTF                              00000001
+IOCB                              00000096
 IOCB0                             00000000
 IOCB1                             00000001
 IOCB2                             00000002
@@ -321,6 +482,12 @@ OSFIE                             00000007
 OSFIF                             00000007
 OSTS                              00000003
 P                                 00000004
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 P1M0                              00000006
 P1M1                              00000007
 PCL                               00000002
@@ -328,12 +495,6 @@ PCLATH                            0000000A
 PCON                              0000008E
 PDC0                              00000000
 PDC1                              00000001
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  7
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PDC2                              00000002
 PDC3                              00000003
 PDC4                              00000004
@@ -380,6 +541,12 @@ RB3                               00000003
 RB4                               00000004
 RB5                               00000005
 RB6                               00000006
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RB7                               00000007
 RBIE                              00000003
 RBIF                              00000000
@@ -387,12 +554,6 @@ RC0                               00000000
 RC1                               00000001
 RC2                               00000002
 RC3                               00000003
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  8
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RC4                               00000004
 RC5                               00000005
 RC6                               00000006
@@ -427,6 +588,10 @@ RX9                               00000006
 RX9D                              00000000
 R_NOT_W                           00000002
 R_W                               00000002
+Repeticion1                       00000043
+Repeticion2                       00000045
+RotateZeroIntoHun                 00000063
+RotateZeroIntoTen                 0000005B
 S                                 00000003
 SBOREN                            00000004
 SCKP                              00000004
@@ -435,6 +600,12 @@ SEN                               00000000
 SENDB                             00000003
 SMP                               00000007
 SPBRG                             00000099
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SPBRGH                            0000009A
 SPEN                              00000007
 SR0                               00000006
@@ -446,12 +617,6 @@ SSPBUF                            00000013
 SSPCON                            00000014
 SSPCON2                           00000091
 SSPEN                             00000005
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE  9
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SSPIE                             00000003
 SSPIF                             00000003
 SSPM0                             00000000
@@ -494,6 +659,12 @@ TMR1GE                            00000006
 TMR1H                             0000000F
 TMR1IE                            00000000
 TMR1IF                            00000000
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR1L                             0000000E
 TMR1ON                            00000000
 TMR2                              00000011
@@ -505,12 +676,6 @@ TOUTPS1                           00000004
 TOUTPS2                           00000005
 TOUTPS3                           00000006
 TRISA                             00000085
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE 10
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRISA0                            00000000
 TRISA1                            00000001
 TRISA2                            00000002
@@ -553,6 +718,12 @@ TRISE2                            00000002
 TRISE3                            00000003
 TRMT                              00000001
 TUN0                              00000000
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE 14
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TUN1                              00000001
 TUN2                              00000002
 TUN3                              00000003
@@ -564,23 +735,21 @@ TXD8                              00000000
 TXEN                              00000005
 TXIE                              00000004
 TXIF                              00000004
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE 11
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TXREG                             00000019
 TXSTA                             00000098
 TX_DATO                           00000005
-TX_DAT_W                          00000009
+TX_DATO1                          00000039
+TX_DAT_1                          0000003D
+TX_DAT_W                          0000000A
+Tens                              00000026
 UA                                00000001
 ULPWUE                            00000005
 ULPWUIE                           00000002
 ULPWUIF                           00000002
+Units                             00000027
 VCFG0                             00000004
 VCFG1                             00000005
-VOLVER                            00000013
+VOLVER                            00000014
 VR0                               00000000
 VR1                               00000001
 VR2                               00000002
@@ -608,6 +777,12 @@ WPUB6                             00000006
 WPUB7                             00000007
 WR                                00000001
 WREN                              00000002
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE 15
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 WRERR                             00000003
 WUE                               00000001
 Z                                 00000002
@@ -623,12 +798,6 @@ _BOR_NSLEEP                       00003EFF
 _BOR_OFF                          00003CFF
 _BOR_ON                           00003FFF
 _BOR_SBODEN                       00003DFF
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE 12
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _CONFIG1                          00002007
 _CONFIG2                          00002008
 _CPD_OFF                          00003FFF
@@ -667,6 +836,12 @@ _INTRC_OSC_NOCLKOUT               00003FFC
 _LP_OSC                           00003FF8
 _LVP_OFF                          00002FFF
 _LVP_ON                           00003FFF
+MPASM 5.68                      UARTTEST.ASM   10-22-2020  10:09:28         PAGE 16
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _MCLRE_OFF                        00003FDF
 _MCLRE_ON                         00003FFF
 _PWRTE_OFF                        00003FFF
@@ -681,16 +856,19 @@ _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
 _XT_OSC                           00003FF9
 __16F887                          00000001
-inicio                            00000014
-MPASM 5.68                      UARTTEST.ASM   10-19-2020  8:13:42         PAGE 13
-
-
-
-
-
+bin                               00000028
+completeTenCarry                  00000065
+completeUnitCarry                 0000005D
+continue                          00000069
+count8                            00000029
+endBinary2BCD                     0000007C
+inicio                            00000015
+numpasajeros                      00000020
+startconversion                   00000053
+temp                              0000002A
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
-Messages :     6 reported,     0 suppressed
+Messages :     7 reported,     0 suppressed
 
 
